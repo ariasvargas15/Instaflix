@@ -13,7 +13,7 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Instaflix"
-include ':app'
-
 enableFeaturePreview("VERSION_CATALOGS")
 
+include ':app'
+include ':home'

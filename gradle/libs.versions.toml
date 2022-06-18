@@ -1,0 +1,20 @@
+[versions]
+hilt = "2.42"
+navigation = "2.4.2"
+
+[libraries]
+# Plugins
+hilt-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
+
+# Libs
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+material = "com.google.android.material:material:1.6.1"
+constraint = "androidx.constraintlayout:constraintlayout:2.1.4"
+
+navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation" }
+navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigation" }
+
+[bundles]
+navigation = ["navigation.fragment", "navigation.ui"]
+
