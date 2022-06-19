@@ -43,7 +43,6 @@ dependencies {
     kapt libs.hilt.compiler
 
     implementation libs.bundles.navigation
-    implementation libs.material
     implementation libs.swiperefresh
 
     testImplementation libs.mockk

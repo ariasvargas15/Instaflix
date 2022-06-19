@@ -1,7 +1,11 @@
-package com.bsav.home.domain.usecase.strategy
+package com.bsav.home.domain.usecase.strategy.di
 
 import com.bsav.home.domain.model.ProgramType
-import com.bsav.home.domain.usecase.strategy.di.ProgramTypeKey
+import com.bsav.home.domain.usecase.strategy.GetPopularMoviesStrategy
+import com.bsav.home.domain.usecase.strategy.GetPopularTvShowsStrategy
+import com.bsav.home.domain.usecase.strategy.GetProgramsStrategy
+import com.bsav.home.domain.usecase.strategy.GetTopRatedMoviesStrategy
+import com.bsav.home.domain.usecase.strategy.GetTopRatedTvShowsStrategy
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable

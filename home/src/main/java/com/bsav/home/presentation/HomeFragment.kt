@@ -6,9 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.bsav.core.utils.showErrorMessage
 import com.bsav.home.databinding.FragmentHomeBinding
 import com.bsav.home.domain.model.Program
 import com.bsav.home.domain.model.ProgramType
+import com.bsav.home.presentation.HomeViewModel.State.Error
+import com.bsav.home.presentation.HomeViewModel.State.LoadPopularMovies
+import com.bsav.home.presentation.HomeViewModel.State.LoadPopularTvShows
+import com.bsav.home.presentation.HomeViewModel.State.LoadTopRatedMovies
+import com.bsav.home.presentation.HomeViewModel.State.LoadTopRatedTvShows
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,12 +43,19 @@ class HomeFragment : Fragment(), OnClickProgram {
         viewModel.run {
             state.observe(viewLifecycleOwner) {
                 when (it) {
-                    is HomeViewModel.State.LoadPopularMovies -> loadPopularMovies(it.programs)
-                    is HomeViewModel.State.LoadPopularTvShows -> loadPopularTvShows(it.programs)
-                    is HomeViewModel.State.LoadTopRatedMovies -> loadTopRatedMovies(it.programs)
-                    is HomeViewModel.State.LoadTopRatedTvShows -> loadTopRatedTvShows(it.programs)
+                    is LoadPopularMovies -> loadPopularMovies(it.programs)
+                    is LoadPopularTvShows -> loadPopularTvShows(it.programs)
+                    is LoadTopRatedMovies -> loadTopRatedMovies(it.programs)
+                    is LoadTopRatedTvShows -> loadTopRatedTvShows(it.programs)
+                    is Error -> handleError()
                 }
             }
+        }
+    }
+
+    private fun handleError() {
+        binding.root.showErrorMessage {
+            viewModel.getPrograms()
         }
     }
 

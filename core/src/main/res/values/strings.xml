@@ -1,0 +1,4 @@
+<resources>
+    <string name="something_went_wrong">Ups! Something went wrong :(</string>
+    <string name="try_again_message">Try again</string>
+</resources>

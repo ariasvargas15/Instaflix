@@ -37,4 +37,5 @@ dependencies {
     kapt libs.hilt.compiler
 
     api libs.coroutines.core
+    api libs.material
 }

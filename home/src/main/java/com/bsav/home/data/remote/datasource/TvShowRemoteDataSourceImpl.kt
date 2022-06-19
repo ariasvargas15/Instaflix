@@ -1,5 +1,6 @@
 package com.bsav.home.data.remote.datasource
 
+import android.accounts.NetworkErrorException
 import com.bsav.home.data.remote.service.TvShowService
 import com.bsav.home.domain.model.Program
 import com.bsav.home.domain.model.ProgramType
@@ -16,7 +17,6 @@ class TvShowRemoteDataSourceImpl @Inject constructor(
     override fun getPopularTvShows(): Flow<List<Program>> = flow {
         emit(tvShowService.getPopularTvShows().mapToDomain(ProgramType.TvShow.Popular))
     }
-
 
     override fun getTopRatedTvShows(): Flow<List<Program>> = flow {
         emit(tvShowService.getTopRatedTvShows().mapToDomain(ProgramType.TvShow.TopRated))

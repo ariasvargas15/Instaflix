@@ -10,6 +10,7 @@ import com.bsav.home.domain.model.ProgramType
 import com.bsav.home.domain.usecase.GetProgramsByType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
@@ -33,6 +34,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             getProgramsByType(ProgramType.Movie.Popular)
                 .flowOn(coroutineContextProvider.io)
+                .catch { _state.value = State.Error }
                 .collect {
                     _state.value = State.LoadPopularMovies(it)
                 }
@@ -43,6 +45,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             getProgramsByType(ProgramType.Movie.TopRated)
                 .flowOn(coroutineContextProvider.io)
+                .catch { _state.value = State.Error }
                 .collect {
                     _state.value = State.LoadTopRatedMovies(it)
                 }
@@ -53,6 +56,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             getProgramsByType(ProgramType.TvShow.Popular)
                 .flowOn(coroutineContextProvider.io)
+                .catch { _state.value = State.Error }
                 .collect {
                     _state.value = State.LoadPopularTvShows(it)
                 }
@@ -63,6 +67,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             getProgramsByType(ProgramType.TvShow.TopRated)
                 .flowOn(coroutineContextProvider.io)
+                .catch { _state.value = State.Error }
                 .collect {
                     _state.value = State.LoadTopRatedTvShows(it)
                 }
@@ -70,6 +75,7 @@ class HomeViewModel @Inject constructor(
     }
 
     sealed interface State {
+        object Error : State
         data class LoadPopularMovies(val programs: List<Program>) : State
         data class LoadTopRatedMovies(val programs: List<Program>) : State
         data class LoadPopularTvShows(val programs: List<Program>) : State
