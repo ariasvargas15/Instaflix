@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.bsav.instaflix">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".InstaflixApp"
         android:allowBackup="true"

@@ -17,3 +17,5 @@ enableFeaturePreview("VERSION_CATALOGS")
 
 include ':app'
 include ':home'
+include ':core'
+include ':testutils'
