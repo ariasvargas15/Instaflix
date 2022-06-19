@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bsav.core.utils.showErrorMessage
 import com.bsav.home.databinding.FragmentHomeBinding
+import com.bsav.home.domain.model.Destination
 import com.bsav.home.domain.model.Program
 import com.bsav.home.domain.model.ProgramType
 import com.bsav.home.presentation.HomeViewModel.State.Error
@@ -15,6 +17,7 @@ import com.bsav.home.presentation.HomeViewModel.State.LoadPopularMovies
 import com.bsav.home.presentation.HomeViewModel.State.LoadPopularTvShows
 import com.bsav.home.presentation.HomeViewModel.State.LoadTopRatedMovies
 import com.bsav.home.presentation.HomeViewModel.State.LoadTopRatedTvShows
+import com.bsav.home.presentation.HomeViewModel.State.NavigateTo
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,6 +50,7 @@ class HomeFragment : Fragment(), OnClickProgram {
                     is LoadPopularTvShows -> loadPopularTvShows(it.programs)
                     is LoadTopRatedMovies -> loadTopRatedMovies(it.programs)
                     is LoadTopRatedTvShows -> loadTopRatedTvShows(it.programs)
+                    is NavigateTo -> navigateTo(it.destination)
                     is Error -> handleError()
                 }
             }
@@ -80,6 +84,10 @@ class HomeFragment : Fragment(), OnClickProgram {
     }
 
     override fun goToDetails(programId: Int, programType: ProgramType) {
-        TODO("Not yet implemented")
+        viewModel.goToDetail(programId, programType)
+    }
+
+    private fun navigateTo(destination: Destination) {
+        findNavController().navigate(destination.deepLink)
     }
 }

@@ -1,14 +1,11 @@
 package com.bsav.home.data.remote.datasource
 
-import android.accounts.NetworkErrorException
 import com.bsav.home.data.remote.service.TvShowService
 import com.bsav.home.domain.model.Program
 import com.bsav.home.domain.model.ProgramType
-import javax.inject.Inject
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import javax.inject.Inject
 
 class TvShowRemoteDataSourceImpl @Inject constructor(
     private val tvShowService: TvShowService

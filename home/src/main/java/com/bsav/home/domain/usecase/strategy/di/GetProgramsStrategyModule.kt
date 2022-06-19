@@ -40,5 +40,4 @@ object GetProgramsStrategyModule {
     @Reusable
     @ProgramTypeKey(ProgramType.TvShow.TopRated::class)
     fun provideGetTopRatedTvShowsStrategy(getTopRatedTvShowsStrategy: GetTopRatedTvShowsStrategy): GetProgramsStrategy = getTopRatedTvShowsStrategy
-
 }

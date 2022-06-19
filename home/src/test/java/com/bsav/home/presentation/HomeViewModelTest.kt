@@ -3,9 +3,11 @@ package com.bsav.home.presentation
 import android.accounts.NetworkErrorException
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.bsav.home.domain.model.Destination
 import com.bsav.home.domain.model.Program
 import com.bsav.home.domain.model.ProgramType
 import com.bsav.home.domain.usecase.GetProgramsByType
+import com.bsav.home.domain.usecase.navigator.ProgramNavigator
 import com.bsav.testutils.TestCoroutineRule
 import io.mockk.every
 import io.mockk.mockk
@@ -30,6 +32,7 @@ class HomeViewModelTest {
     val testCoroutineRule = TestCoroutineRule()
 
     private val getProgramsByType = mockk<GetProgramsByType>()
+    private val programNavigator = mockk<ProgramNavigator>()
     private lateinit var viewModel: HomeViewModel
     private val observer = mockk<Observer<HomeViewModel.State>>()
     private val slot = slot<HomeViewModel.State>()
@@ -38,7 +41,11 @@ class HomeViewModelTest {
 
     @Before
     fun setup() {
-        viewModel = HomeViewModel(getProgramsByType, testCoroutineRule.coroutineContextProvider)
+        viewModel = HomeViewModel(
+            getProgramsByType,
+            programNavigator,
+            testCoroutineRule.coroutineContextProvider
+        )
         viewModel.state.observeForever(observer)
     }
 
@@ -150,4 +157,21 @@ class HomeViewModelTest {
         assert(states.contains(HomeViewModel.State.Error))
     }
 
+    @Test
+    fun `when goToDetail is called then should emit NavigateTo state`() {
+        val params = mapOf("programId" to 1)
+        val destination = mockk<Destination>()
+        every {
+            programNavigator.resolveDestination(params, ProgramType.Movie.Popular)
+        } answers {
+            destination
+        }
+
+        viewModel.goToDetail(1, ProgramType.Movie.Popular)
+
+        verify(exactly = 1) {
+            programNavigator.resolveDestination(params, ProgramType.Movie.Popular)
+        }
+        assert(states.contains(HomeViewModel.State.NavigateTo(destination)))
+    }
 }

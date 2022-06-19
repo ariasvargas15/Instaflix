@@ -39,5 +39,4 @@ class ProgramAdapter(
     }
 
     override fun getItemCount() = programs.size
-
 }

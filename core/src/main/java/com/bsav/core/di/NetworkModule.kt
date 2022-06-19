@@ -4,10 +4,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
 private const val BASE_URL = "https://api.themoviedb.org/3/"
 
@@ -29,5 +29,4 @@ object NetworkModule {
             .client(httpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-
 }

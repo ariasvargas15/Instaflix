@@ -21,5 +21,4 @@ object RepositoryModule {
     @Provides
     @Reusable
     fun provideTvShowRepository(tvShowRepositoryImpl: TvShowRepositoryImpl): TvShowRepository = tvShowRepositoryImpl
-
 }

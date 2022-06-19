@@ -2,8 +2,8 @@ package com.bsav.home.domain.usecase.strategy
 
 import com.bsav.home.domain.TvShowRepository
 import com.bsav.home.domain.model.Program
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
 class GetTopRatedTvShowsStrategy @Inject constructor(
     private val tvShowRepository: TvShowRepository

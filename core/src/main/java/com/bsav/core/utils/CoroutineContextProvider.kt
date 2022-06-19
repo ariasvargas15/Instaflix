@@ -1,7 +1,8 @@
 package com.bsav.core.utils
 
-import kotlinx.coroutines.CoroutineDispatcher
+import kotlin.coroutines.CoroutineContext
 
 interface CoroutineContextProvider {
-    val io: CoroutineDispatcher
+    val io: CoroutineContext
+    val computation: CoroutineContext
 }

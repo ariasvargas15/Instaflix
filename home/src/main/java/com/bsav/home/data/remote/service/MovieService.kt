@@ -18,9 +18,7 @@ interface MovieService {
         @Query(PAGE) page: Int = FIRST_PAGE,
         @Query(KEY) apiKey: String = API_KEY
     ): PageMovieNetwork
-
 }
-
 
 private const val FIRST_PAGE = 1
 private const val PAGE = "page"
