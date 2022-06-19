@@ -13,7 +13,7 @@ class GetDeepLink @Inject constructor() {
         params.onEachIndexed { index, entry ->
             deepLink += "${entry.key}=${entry.value}"
             if (index < params.size - 1) {
-                deepLink += ","
+                deepLink += "&"
             }
         }
         return Destination(deepLink.toUri())
