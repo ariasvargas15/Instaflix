@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -29,8 +31,19 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    viewBinding {
+        enabled = true
+    }
 }
 
 dependencies {
+    implementation project(":home")
 
+    implementation libs.hilt.android
+    kapt libs.hilt.compiler
+
+    implementation libs.material
+    implementation libs.constraint
+
+    implementation libs.bundles.navigation
 }
