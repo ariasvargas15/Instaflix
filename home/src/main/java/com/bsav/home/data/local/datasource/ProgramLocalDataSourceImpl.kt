@@ -12,7 +12,7 @@ class ProgramLocalDataSourceImpl @Inject constructor(
     private val programDao: ProgramDao
 ) : ProgramLocalDataSource {
 
-    override fun getProgramsByType(type: ProgramType): List<Program> =
+    override suspend fun getProgramsByType(type: ProgramType): List<Program> =
         programDao
             .getProgramsByType(type.mapToString())
             .map { it.mapFromEntityToDomain() }

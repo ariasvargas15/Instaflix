@@ -18,7 +18,10 @@ class MovieRepositoryImpl @Inject constructor(
     override fun getPopularMovies(): Flow<List<Program>> =
         movieRemoteDataSource
             .getPopularMovies()
-            .onEach { saveMoviesInCache(it) }
+            .onEach {
+
+                saveMoviesInCache(it)
+            }
             .catch { emit(getCachedMoviesByType(ProgramType.Movie.Popular)) }
 
     override fun getTopRatedMovies(): Flow<List<Program>> =
@@ -28,9 +31,12 @@ class MovieRepositoryImpl @Inject constructor(
             .catch { emit(getCachedMoviesByType(ProgramType.Movie.TopRated)) }
 
     private suspend fun saveMoviesInCache(programs: List<Program>) {
+        programs.firstOrNull()?.let {
+            programLocalDataSource.deleteProgramsByType(it.type)
+        }
         programLocalDataSource.savePrograms(programs)
     }
 
-    private fun getCachedMoviesByType(type: ProgramType): List<Program> =
+    private suspend fun getCachedMoviesByType(type: ProgramType): List<Program> =
         programLocalDataSource.getProgramsByType(type)
 }

@@ -27,9 +27,12 @@ class TvShowRepositoryImpl @Inject constructor(
             .catch { emit(getCachedTvShowsByType(ProgramType.TvShow.TopRated)) }
 
     private suspend fun saveTvShowsInCache(programs: List<Program>) {
+        programs.firstOrNull()?.let {
+            programLocalDataSource.deleteProgramsByType(it.type)
+        }
         programLocalDataSource.savePrograms(programs)
     }
 
-    private fun getCachedTvShowsByType(type: ProgramType): List<Program> =
+    private suspend fun getCachedTvShowsByType(type: ProgramType): List<Program> =
         programLocalDataSource.getProgramsByType(type)
 }

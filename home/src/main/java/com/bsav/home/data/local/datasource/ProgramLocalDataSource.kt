@@ -4,7 +4,7 @@ import com.bsav.home.domain.model.Program
 import com.bsav.home.domain.model.ProgramType
 
 interface ProgramLocalDataSource {
-    fun getProgramsByType(type: ProgramType): List<Program>
+    suspend fun getProgramsByType(type: ProgramType): List<Program>
     suspend fun savePrograms(programs: List<Program>)
     suspend fun deleteProgramsByType(type: ProgramType)
 }
