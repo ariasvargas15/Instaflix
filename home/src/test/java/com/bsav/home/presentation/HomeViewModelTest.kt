@@ -3,6 +3,8 @@ package com.bsav.home.presentation
 import android.accounts.NetworkErrorException
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.bsav.core.utils.Event
+import com.bsav.core.utils.NetworkHelper
 import com.bsav.home.domain.model.Destination
 import com.bsav.home.domain.model.Program
 import com.bsav.home.domain.model.ProgramType
@@ -32,10 +34,14 @@ class HomeViewModelTest {
 
     private val getProgramsByType = mockk<GetProgramsByType>()
     private val programNavigator = mockk<ProgramNavigator>()
+    private val networkHelper = mockk<NetworkHelper>()
     private lateinit var viewModel: HomeViewModel
-    private val observer = mockk<Observer<HomeViewModel.State>>()
-    private val slot = slot<HomeViewModel.State>()
-    private val states = arrayListOf<HomeViewModel.State>()
+    private val stateObserver = mockk<Observer<HomeViewModel.State>>()
+    private val statesSlot = slot<HomeViewModel.State>()
+    private val states = mutableListOf<HomeViewModel.State>()
+    private val destinationObserver = mockk<Observer<Event<Destination>>>()
+    private val destinationSlot = slot<Event<Destination>>()
+    private val destinations = mutableListOf<Event<Destination>>()
     private val programs = mockk<List<Program>>()
 
     @Before
@@ -43,24 +49,49 @@ class HomeViewModelTest {
         viewModel = HomeViewModel(
             getProgramsByType,
             programNavigator,
+            networkHelper,
             testCoroutineRule.coroutineContextProvider
         )
-        viewModel.state.observeForever(observer)
+        viewModel.state.observeForever(stateObserver)
     }
 
     @After
     fun tearDown() {
-        slot.clear()
+        statesSlot.clear()
         states.clear()
-        viewModel.state.removeObserver(observer)
+        viewModel.state.removeObserver(stateObserver)
     }
 
     init {
+        every { networkHelper.isInternetAvailable() } answers { true }
         every { getProgramsByType(ProgramType.Movie.Popular) } answers { flowOf(programs) }
         every { getProgramsByType(ProgramType.Movie.TopRated) } answers { flowOf(programs) }
         every { getProgramsByType(ProgramType.TvShow.Popular) } answers { flowOf(programs) }
         every { getProgramsByType(ProgramType.TvShow.TopRated) } answers { flowOf(programs) }
-        every { observer.onChanged(capture(slot)) } answers { states.add(slot.captured) }
+        every { stateObserver.onChanged(capture(statesSlot)) } answers { states.add(statesSlot.captured) }
+        every { destinationObserver.onChanged(capture(destinationSlot)) } answers { destinations.add(destinationSlot.captured) }
+    }
+
+    @Test
+    fun `given internet when getPrograms is called then should check internet connection and not emit state`() {
+        viewModel.getPrograms()
+
+        verify(exactly = 1) {
+            networkHelper.isInternetAvailable()
+        }
+        assert(states.contains(HomeViewModel.State.NoInternetAvailable).not())
+    }
+
+    @Test
+    fun `given no internet when getPrograms is called then should check internet connection and emit state`() {
+        every { networkHelper.isInternetAvailable() } answers { false }
+
+        viewModel.getPrograms()
+
+        verify(exactly = 1) {
+            networkHelper.isInternetAvailable()
+        }
+        assert(states.contains(HomeViewModel.State.NoInternetAvailable))
     }
 
     @Test
@@ -93,7 +124,7 @@ class HomeViewModelTest {
             getProgramsByType(ProgramType.TvShow.TopRated)
         }
         assert(states.size == 4)
-        assert(states.contains(HomeViewModel.State.Error))
+        assert(states.contains(HomeViewModel.State.UnexpectedError))
         assert(states.contains(HomeViewModel.State.LoadTopRatedMovies(programs)))
         assert(states.contains(HomeViewModel.State.LoadPopularTvShows(programs)))
         assert(states.contains(HomeViewModel.State.LoadTopRatedTvShows(programs)))
@@ -113,7 +144,7 @@ class HomeViewModelTest {
         }
         assert(states.size == 4)
         assert(states.contains(HomeViewModel.State.LoadPopularMovies(programs)))
-        assert(states.contains(HomeViewModel.State.Error))
+        assert(states.contains(HomeViewModel.State.UnexpectedError))
         assert(states.contains(HomeViewModel.State.LoadPopularTvShows(programs)))
         assert(states.contains(HomeViewModel.State.LoadTopRatedTvShows(programs)))
     }
@@ -133,7 +164,7 @@ class HomeViewModelTest {
         assert(states.size == 4)
         assert(states.contains(HomeViewModel.State.LoadPopularMovies(programs)))
         assert(states.contains(HomeViewModel.State.LoadTopRatedMovies(programs)))
-        assert(states.contains(HomeViewModel.State.Error))
+        assert(states.contains(HomeViewModel.State.UnexpectedError))
         assert(states.contains(HomeViewModel.State.LoadTopRatedTvShows(programs)))
     }
 
@@ -153,7 +184,7 @@ class HomeViewModelTest {
         assert(states.contains(HomeViewModel.State.LoadPopularMovies(programs)))
         assert(states.contains(HomeViewModel.State.LoadTopRatedMovies(programs)))
         assert(states.contains(HomeViewModel.State.LoadPopularTvShows(programs)))
-        assert(states.contains(HomeViewModel.State.Error))
+        assert(states.contains(HomeViewModel.State.UnexpectedError))
     }
 
     @Test
@@ -166,11 +197,13 @@ class HomeViewModelTest {
             destination
         }
 
+        viewModel.navigate.observeForever(destinationObserver)
         viewModel.goToDetail(1, ProgramType.Movie.Popular)
+        viewModel.navigate.removeObserver(destinationObserver)
 
         verify(exactly = 1) {
             programNavigator.resolveDestination(params, ProgramType.Movie.Popular)
         }
-        assert(states.contains(HomeViewModel.State.NavigateTo(destination)))
+        assert(destinations.contains(Event(destination)))
     }
 }

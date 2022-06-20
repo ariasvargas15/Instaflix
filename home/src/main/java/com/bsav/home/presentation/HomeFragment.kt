@@ -8,16 +8,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bsav.core.utils.showErrorMessage
+import com.bsav.core.utils.showInternetNotAvailable
 import com.bsav.home.databinding.FragmentHomeBinding
 import com.bsav.home.domain.model.Destination
 import com.bsav.home.domain.model.Program
 import com.bsav.home.domain.model.ProgramType
-import com.bsav.home.presentation.HomeViewModel.State.Error
 import com.bsav.home.presentation.HomeViewModel.State.LoadPopularMovies
 import com.bsav.home.presentation.HomeViewModel.State.LoadPopularTvShows
 import com.bsav.home.presentation.HomeViewModel.State.LoadTopRatedMovies
 import com.bsav.home.presentation.HomeViewModel.State.LoadTopRatedTvShows
-import com.bsav.home.presentation.HomeViewModel.State.NavigateTo
+import com.bsav.home.presentation.HomeViewModel.State.NoInternetAvailable
+import com.bsav.home.presentation.HomeViewModel.State.UnexpectedError
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,13 +34,8 @@ class HomeFragment : Fragment(), OnClickProgram {
             viewModel.getPrograms()
             binding.swipeRefresh.isRefreshing = false
         }
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         initializeObservers()
+        return binding.root
     }
 
     private fun initializeObservers() {
@@ -50,8 +46,13 @@ class HomeFragment : Fragment(), OnClickProgram {
                     is LoadPopularTvShows -> loadPopularTvShows(it.programs)
                     is LoadTopRatedMovies -> loadTopRatedMovies(it.programs)
                     is LoadTopRatedTvShows -> loadTopRatedTvShows(it.programs)
-                    is NavigateTo -> navigateTo(it.destination)
-                    is Error -> handleError()
+                    is UnexpectedError -> handleError()
+                    is NoInternetAvailable -> showNoInternetMessage()
+                }
+            }
+            navigate.observe(viewLifecycleOwner) {
+                it.getContentIfNotHandled()?.let { destination ->
+                    navigateTo(destination)
                 }
             }
         }
@@ -59,6 +60,10 @@ class HomeFragment : Fragment(), OnClickProgram {
 
     private fun handleError() {
         view?.showErrorMessage()
+    }
+
+    private fun showNoInternetMessage() {
+        view?.showInternetNotAvailable { viewModel.getPrograms() }
     }
 
     private fun loadPopularMovies(programs: List<Program>) {

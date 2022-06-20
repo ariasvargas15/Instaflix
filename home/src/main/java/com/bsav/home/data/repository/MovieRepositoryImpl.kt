@@ -18,10 +18,7 @@ class MovieRepositoryImpl @Inject constructor(
     override fun getPopularMovies(): Flow<List<Program>> =
         movieRemoteDataSource
             .getPopularMovies()
-            .onEach {
-
-                saveMoviesInCache(it)
-            }
+            .onEach { saveMoviesInCache(it) }
             .catch { emit(getCachedMoviesByType(ProgramType.Movie.Popular)) }
 
     override fun getTopRatedMovies(): Flow<List<Program>> =

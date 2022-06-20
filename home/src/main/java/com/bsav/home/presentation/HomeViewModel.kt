@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bsav.core.utils.CoroutineContextProvider
+import com.bsav.core.utils.Event
+import com.bsav.core.utils.NetworkHelper
 import com.bsav.home.domain.model.Destination
 import com.bsav.home.domain.model.Program
 import com.bsav.home.domain.model.ProgramType
@@ -21,24 +23,36 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getProgramsByType: GetProgramsByType,
     private val programNavigator: ProgramNavigator,
+    private val networkHelper: NetworkHelper,
     private val coroutineContextProvider: CoroutineContextProvider
 ) : ViewModel() {
 
     private val _state = MutableLiveData<State>()
     val state: LiveData<State> get() = _state
+    private val _navigate = MutableLiveData<Event<Destination>>()
+    val navigate: LiveData<Event<Destination>> get() = _navigate
 
     fun getPrograms() {
+        checkInternetConnection()
         getPopularMovies()
         getTopRatedMovies()
         getPopularTvShows()
         getTopRatedTvShows()
     }
 
+    private fun checkInternetConnection() {
+        viewModelScope.launch {
+            if (!networkHelper.isInternetAvailable()) {
+                _state.value = State.NoInternetAvailable
+            }
+        }
+    }
+
     private fun getPopularMovies() {
         viewModelScope.launch {
             getProgramsByType(ProgramType.Movie.Popular)
                 .flowOn(coroutineContextProvider.io)
-                .catch { _state.value = State.Error }
+                .catch { _state.value = State.UnexpectedError }
                 .collect {
                     _state.value = State.LoadPopularMovies(it)
                 }
@@ -49,7 +63,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             getProgramsByType(ProgramType.Movie.TopRated)
                 .flowOn(coroutineContextProvider.io)
-                .catch { _state.value = State.Error }
+                .catch { _state.value = State.UnexpectedError }
                 .collect {
                     _state.value = State.LoadTopRatedMovies(it)
                 }
@@ -60,7 +74,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             getProgramsByType(ProgramType.TvShow.Popular)
                 .flowOn(coroutineContextProvider.io)
-                .catch { _state.value = State.Error }
+                .catch { _state.value = State.UnexpectedError }
                 .collect {
                     _state.value = State.LoadPopularTvShows(it)
                 }
@@ -71,7 +85,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             getProgramsByType(ProgramType.TvShow.TopRated)
                 .flowOn(coroutineContextProvider.io)
-                .catch { _state.value = State.Error }
+                .catch { _state.value = State.UnexpectedError }
                 .collect {
                     _state.value = State.LoadTopRatedTvShows(it)
                 }
@@ -86,17 +100,17 @@ class HomeViewModel @Inject constructor(
                     programType
                 )
             }.let { destination ->
-                _state.value = State.NavigateTo(destination)
+                _navigate.value = Event(destination)
             }
         }
     }
 
     sealed interface State {
-        object Error : State
+        object UnexpectedError : State
+        object NoInternetAvailable : State
         data class LoadPopularMovies(val programs: List<Program>) : State
         data class LoadTopRatedMovies(val programs: List<Program>) : State
         data class LoadPopularTvShows(val programs: List<Program>) : State
         data class LoadTopRatedTvShows(val programs: List<Program>) : State
-        data class NavigateTo(val destination: Destination) : State
     }
 }

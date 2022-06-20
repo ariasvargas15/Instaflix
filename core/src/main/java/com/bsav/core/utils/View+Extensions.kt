@@ -12,3 +12,13 @@ fun View.showErrorMessage() {
         show()
     }
 }
+
+fun View.showInternetNotAvailable(tryAgain: () -> Unit) {
+    Snackbar.make(this, R.string.there_is_no_internet, Snackbar.LENGTH_LONG).apply {
+        setAction(R.string.try_again_message) {
+            tryAgain()
+            dismiss()
+        }
+        show()
+    }
+}
