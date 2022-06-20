@@ -6,15 +6,3 @@ data class Program(
     val posterPath: String?,
     val type: ProgramType,
 )
-
-sealed interface ProgramType {
-    interface Movie : ProgramType {
-        object Popular : ProgramType
-        object TopRated : ProgramType
-    }
-
-    interface TvShow : ProgramType {
-        object Popular : ProgramType
-        object TopRated : ProgramType
-    }
-}

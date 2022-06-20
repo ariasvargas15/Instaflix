@@ -38,12 +38,16 @@ android {
 
 dependencies {
     implementation project(":home")
+    implementation project(":movie")
 
     implementation libs.hilt.android
     kapt libs.hilt.compiler
 
+    // Material
     implementation libs.material
     implementation libs.constraint
 
+    // Navigation
     implementation libs.bundles.navigation
+    implementation 'androidx.core:core-splashscreen:1.0.0-rc01'
 }

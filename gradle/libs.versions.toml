@@ -4,10 +4,12 @@ navigation = "2.4.2"
 retrofit = "2.9.0"
 mockk = "1.12.4"
 coroutines = "1.6.2"
+room = "2.4.2"
 
 [libraries]
 # Plugins
 hilt-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
+safeargs-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigation" }
 
 # Libs
 material = "com.google.android.material:material:1.6.1"
@@ -21,6 +23,11 @@ hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt"
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation" }
 navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigation" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+kotlin-reflect = "org.jetbrains.kotlin:kotlin-reflect:1.6.21"
+
 
 # Test libs
 junit = "junit:junit:4.13.2"
@@ -31,3 +38,4 @@ coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", ve
 [bundles]
 navigation = ["navigation.fragment", "navigation.ui"]
 retrofit = ["retrofit", "gson"]
+room = ["room.runtime", "room.ktx"]

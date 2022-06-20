@@ -2,7 +2,6 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id 'kotlin-android'
     id 'dagger.hilt.android.plugin'
 }
 
@@ -39,12 +38,19 @@ dependencies {
     implementation project(":core")
     testImplementation project(":testutils")
 
+    implementation libs.kotlin.reflect
+
+    // Hilt
     implementation libs.hilt.android
     kapt libs.hilt.compiler
 
+    // Navigation
     implementation libs.bundles.navigation
+
+    // Material
     implementation libs.swiperefresh
 
+    // Testing
     testImplementation libs.mockk
     testImplementation libs.junit
     testImplementation libs.coretesting
