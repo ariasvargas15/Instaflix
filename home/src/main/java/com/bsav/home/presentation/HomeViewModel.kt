@@ -11,11 +11,11 @@ import com.bsav.home.domain.model.ProgramType
 import com.bsav.home.domain.usecase.GetProgramsByType
 import com.bsav.home.domain.usecase.navigator.ProgramNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
