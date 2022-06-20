@@ -17,19 +17,19 @@ class TvShowRepositoryImpl @Inject constructor(
     override fun getPopularTvShows(): Flow<List<Program>> =
         tvShowRemoteDataSource
             .getPopularTvShows()
-            .onEach { saveMoviesInCache(it) }
-            .catch { emit(getMoviesInCacheByType(ProgramType.TvShow.Popular)) }
+            .onEach { saveTvShowsInCache(it) }
+            .catch { emit(getCachedTvShowsByType(ProgramType.TvShow.Popular)) }
 
     override fun getTopRatedTvShows(): Flow<List<Program>> =
         tvShowRemoteDataSource
             .getTopRatedTvShows()
-            .onEach { saveMoviesInCache(it) }
-            .catch { emit(getMoviesInCacheByType(ProgramType.TvShow.TopRated)) }
+            .onEach { saveTvShowsInCache(it) }
+            .catch { emit(getCachedTvShowsByType(ProgramType.TvShow.TopRated)) }
 
-    private suspend fun saveMoviesInCache(programs: List<Program>) {
+    private suspend fun saveTvShowsInCache(programs: List<Program>) {
         programLocalDataSource.savePrograms(programs)
     }
 
-    private fun getMoviesInCacheByType(type: ProgramType): List<Program> =
+    private fun getCachedTvShowsByType(type: ProgramType): List<Program> =
         programLocalDataSource.getProgramsByType(type)
 }
