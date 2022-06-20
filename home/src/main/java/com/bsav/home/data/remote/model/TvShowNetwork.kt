@@ -13,7 +13,7 @@ data class PageTvShowNetwork(
 data class TvShowNetwork(
     @SerializedName("id") val id: Int,
     @SerializedName("name") val name: String,
-    @SerializedName("poster_path") val posterPath: String,
+    @SerializedName("poster_path") val posterPath: String?,
 ) {
     fun mapToDomain(type: ProgramType): Program = Program(
         id,

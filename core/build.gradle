@@ -30,12 +30,23 @@ android {
 }
 
 dependencies {
-    implementation libs.glide
+    // Glide
+    api libs.glide
+
+    // Retrofit
     api libs.bundles.retrofit
 
+    // Hilt
     implementation libs.hilt.android
     kapt libs.hilt.compiler
 
-    api libs.coroutines.core
-    api libs.material
+    // Coroutines
+    implementation libs.coroutines.core
+
+    // Material
+    implementation libs.material
+
+    // Room
+    implementation libs.bundles.room
+    kapt libs.room.compiler
 }

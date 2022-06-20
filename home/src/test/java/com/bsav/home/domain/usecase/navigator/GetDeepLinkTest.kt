@@ -8,7 +8,6 @@ import io.mockk.mockkStatic
 import org.junit.Assert
 import org.junit.Test
 
-
 class GetDeepLinkTest {
 
     private val getDeepLink = GetDeepLink()

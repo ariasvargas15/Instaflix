@@ -38,7 +38,12 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             getProgramsByType(ProgramType.Movie.Popular)
                 .flowOn(coroutineContextProvider.io)
-                .catch { _state.value = State.Error }
+                .catch {
+                    if (this is Exception) {
+                        this.printStackTrace()
+                    }
+                    _state.value = State.Error
+                }
                 .collect {
                     _state.value = State.LoadPopularMovies(it)
                 }

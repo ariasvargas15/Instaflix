@@ -16,7 +16,6 @@ import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -65,7 +64,7 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `when getPrograms is called then should call usecase and emit all states`() = runTest {
+    fun `when getPrograms is called then should call usecase and emit all states`() {
         viewModel.getPrograms()
 
         verify(exactly = 1) {
@@ -82,7 +81,7 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `given popular movies failed when getPrograms is called then should emit error and the other states`() = runTest {
+    fun `given popular movies failed when getPrograms is called then should emit error and the other states`() {
         every { getProgramsByType(ProgramType.Movie.Popular) } answers { flow { throw NetworkErrorException() } }
 
         viewModel.getPrograms()
@@ -101,7 +100,7 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `given top rated movies failed when getPrograms is called then should emit error and the other states`() = runTest {
+    fun `given top rated movies failed when getPrograms is called then should emit error and the other states`() {
         every { getProgramsByType(ProgramType.Movie.TopRated) } answers { flow { throw NetworkErrorException() } }
 
         viewModel.getPrograms()
@@ -120,7 +119,7 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `given popular tv shows failed when getPrograms is called then should emit error and the other states`() = runTest {
+    fun `given popular tv shows failed when getPrograms is called then should emit error and the other states`() {
         every { getProgramsByType(ProgramType.TvShow.Popular) } answers { flow { throw NetworkErrorException() } }
 
         viewModel.getPrograms()
@@ -139,7 +138,7 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `given top rated tv shows failed when getPrograms is called then should emit error and the other states`() = runTest {
+    fun `given top rated tv shows failed when getPrograms is called then should emit error and the other states`() {
         every { getProgramsByType(ProgramType.TvShow.TopRated) } answers { flow { throw NetworkErrorException() } }
 
         viewModel.getPrograms()

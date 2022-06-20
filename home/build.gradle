@@ -42,12 +42,19 @@ dependencies {
     implementation project(":core")
     testImplementation project(":testutils")
 
+    implementation libs.kotlin.reflect
+
+    // Hilt
     implementation libs.hilt.android
     kapt libs.hilt.compiler
 
+    // Navigation
     implementation libs.bundles.navigation
+
+    // Material
     implementation libs.swiperefresh
 
+    // Testing
     testImplementation libs.mockk
     testImplementation libs.junit
     testImplementation libs.coretesting

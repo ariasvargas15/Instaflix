@@ -4,10 +4,9 @@ import android.view.View
 import com.bsav.core.R
 import com.google.android.material.snackbar.Snackbar
 
-fun View.showErrorMessage(action: () -> Unit) {
+fun View.showErrorMessage() {
     Snackbar.make(this, R.string.something_went_wrong, Snackbar.LENGTH_INDEFINITE).apply {
-        setAction(R.string.try_again_message) {
-            action()
+        setAction(R.string.dismiss_message) {
             dismiss()
         }
         show()

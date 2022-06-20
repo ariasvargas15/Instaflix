@@ -58,9 +58,7 @@ class HomeFragment : Fragment(), OnClickProgram {
     }
 
     private fun handleError() {
-        binding.root.showErrorMessage {
-            viewModel.getPrograms()
-        }
+        view?.showErrorMessage()
     }
 
     private fun loadPopularMovies(programs: List<Program>) {

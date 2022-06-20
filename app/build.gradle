@@ -42,8 +42,10 @@ dependencies {
     implementation libs.hilt.android
     kapt libs.hilt.compiler
 
+    // Material
     implementation libs.material
     implementation libs.constraint
 
+    // Navigation
     implementation libs.bundles.navigation
 }
