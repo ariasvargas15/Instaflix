@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bsav.core.utils.showErrorMessage
-import com.bsav.core.utils.showInternetNotAvailable
+import com.bsav.core.utils.showInternetNotAvailableMessage
 import com.bsav.home.databinding.FragmentHomeBinding
 import com.bsav.home.domain.model.Destination
 import com.bsav.home.domain.model.Program
@@ -29,13 +29,17 @@ class HomeFragment : Fragment(), OnClickProgram {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        viewModel.getPrograms()
         binding.swipeRefresh.setOnRefreshListener {
             viewModel.getPrograms()
             binding.swipeRefresh.isRefreshing = false
         }
         initializeObservers()
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.getPrograms()
     }
 
     private fun initializeObservers() {
@@ -63,7 +67,7 @@ class HomeFragment : Fragment(), OnClickProgram {
     }
 
     private fun showNoInternetMessage() {
-        view?.showInternetNotAvailable { viewModel.getPrograms() }
+        view?.showInternetNotAvailableMessage { viewModel.getPrograms() }
     }
 
     private fun loadPopularMovies(programs: List<Program>) {
