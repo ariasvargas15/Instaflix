@@ -6,5 +6,6 @@
 
     <include app:graph="@navigation/nav_home" />
     <include app:graph="@navigation/nav_movie" />
+    <include app:graph="@navigation/nav_tv_show" />
 
 </navigation>
