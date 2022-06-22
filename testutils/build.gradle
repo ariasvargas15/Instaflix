@@ -2,6 +2,7 @@ apply from: "$rootDir/shared.gradle"
 
 dependencies {
     implementation project(":core")
+    implementation libs.kotlin.reflect
     implementation libs.coroutines.test
     implementation libs.junit
     implementation libs.appcompat
@@ -9,4 +10,7 @@ dependencies {
     implementation libs.runner
     implementation libs.hilt.testing.android
     kapt libs.hilt.testing.compiler
+
+    implementation "androidx.test.espresso:espresso-contrib:3.4.0"
+    implementation "androidx.test.espresso:espresso-core:3.4.0"
 }

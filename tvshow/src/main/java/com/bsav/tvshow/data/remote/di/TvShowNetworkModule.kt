@@ -16,9 +16,14 @@ object TvShowNetworkModule {
 
     @Provides
     @Reusable
-    fun provideTvShowService(retrofit: Retrofit): TvShowService = retrofit.create(TvShowService::class.java)
+    fun provideTvShowRemoteDataSource(tvShowRemoteDataSourceImpl: TvShowRemoteDataSourceImpl): TvShowRemoteDataSource = tvShowRemoteDataSourceImpl
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+object TvShowServiceModule {
 
     @Provides
     @Reusable
-    fun provideTvShowRemoteDataSource(tvShowRemoteDataSourceImpl: TvShowRemoteDataSourceImpl): TvShowRemoteDataSource = tvShowRemoteDataSourceImpl
+    fun provideTvShowService(retrofit: Retrofit): TvShowService = retrofit.create(TvShowService::class.java)
 }
