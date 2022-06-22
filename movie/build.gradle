@@ -21,8 +21,7 @@ dependencies {
     // Navigation
     implementation libs.bundles.navigation
 
-    // Material
-    implementation libs.swiperefresh
+    implementation libs.skeleton
 
     // Testing
     testImplementation libs.mockk
