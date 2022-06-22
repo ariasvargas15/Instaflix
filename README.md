@@ -42,6 +42,7 @@ Clean Arch Layers:
 - Retrofit to consume the API Rest+
 - Room to persist data locally
 - Navigation is done with Navigation Component and DeepLinks
+- Strategy Pattern for the home to consume the categories
 
 ## CI/CD
 
