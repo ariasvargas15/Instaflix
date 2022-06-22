@@ -17,13 +17,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:id="@+id/instaflix_logo"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:contentDescription="@string/instaflix_logo"
+                android:src="@drawable/ic_instaflix"
+                app:layout_constraintTop_toTopOf="parent"
+                android:scaleType="centerCrop"/>
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/text_popular_movies_title"
                 style="@style/TitleText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/title_popular_movies"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/instaflix_logo" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_popular_movies"

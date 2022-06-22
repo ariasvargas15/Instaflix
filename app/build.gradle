@@ -4,18 +4,17 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
 }
+apply from: "$rootDir/version.gradle"
 
 android {
-    compileSdk 32
+    compileSdk appCompileSdkVersion
 
     defaultConfig {
-        applicationId "com.bsav.instaflix"
-        minSdk 24
-        targetSdk 32
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        applicationId appApplicationId
+        minSdk appMinSdkVersion
+        targetSdk appTargetSdkVersion
+        versionCode appVersionCode
+        versionName appVersionName
     }
 
     buildTypes {
@@ -34,11 +33,17 @@ android {
     viewBinding {
         enabled = true
     }
+    packagingOptions {
+        jniLibs {
+            useLegacyPackaging true
+        }
+    }
 }
 
 dependencies {
     implementation project(":home")
     implementation project(":movie")
+    implementation project(":tvshow")
 
     implementation libs.hilt.android
     kapt libs.hilt.compiler
@@ -46,8 +51,8 @@ dependencies {
     // Material
     implementation libs.material
     implementation libs.constraint
+    implementation libs.splash
 
     // Navigation
     implementation libs.bundles.navigation
-    implementation 'androidx.core:core-splashscreen:1.0.0-rc01'
 }

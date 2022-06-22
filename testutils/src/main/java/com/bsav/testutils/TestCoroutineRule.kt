@@ -1,6 +1,6 @@
 package com.bsav.testutils
 
-import com.bsav.core.utils.CoroutineContextProvider
+import com.bsav.core.coroutinecontext.CoroutineContextProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.SupervisorJob

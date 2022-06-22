@@ -1,0 +1,36 @@
+apply from: "$rootDir/shared.gradle"
+apply plugin: "androidx.navigation.safeargs.kotlin"
+
+android {
+    defaultConfig {
+        testInstrumentationRunner "com.bsav.testutils.CustomTestRunner"
+    }
+    viewBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation project(":core")
+    implementation project(":db")
+    implementation project(":networkhelper")
+
+    testImplementation project(":testutils")
+    androidTestImplementation project(":testutils")
+
+    // Navigation
+    implementation libs.bundles.navigation
+
+    // Material
+    implementation libs.swiperefresh
+
+    // Testing
+    testImplementation libs.mockk
+    testImplementation libs.junit
+    testImplementation libs.coretesting
+    testImplementation libs.coroutines.test
+
+    kaptAndroidTest libs.hilt.testing.compiler
+    androidTestImplementation libs.hilt.testing.android
+    androidTestImplementation libs.mockkandroid
+}

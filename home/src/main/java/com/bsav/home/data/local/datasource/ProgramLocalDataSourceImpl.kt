@@ -1,6 +1,6 @@
 package com.bsav.home.data.local.datasource
 
-import com.bsav.core.db.dao.ProgramDao
+import com.bsav.db.dao.ProgramDao
 import com.bsav.home.data.local.mapFromDomainToEntity
 import com.bsav.home.data.local.mapFromEntityToDomain
 import com.bsav.home.data.local.mapToString

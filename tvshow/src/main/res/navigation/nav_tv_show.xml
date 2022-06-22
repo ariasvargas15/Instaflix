@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_tv_show"
+    app:startDestination="@id/tv_show_fragment">
+
+    <fragment
+        android:id="@+id/tv_show_fragment"
+        android:name="com.bsav.tvshow.presentation.TvShowFragment"
+        android:label="fragment_tv_show"
+        tools:layout="@layout/fragment_tv_show">
+        <argument
+            android:name="programId"
+            app:argType="integer" />
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="myapp://com.bsav.instaflix/tv_show_detail?programId={programId}" />
+    </fragment>
+</navigation>

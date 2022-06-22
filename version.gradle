@@ -1,0 +1,8 @@
+ext {
+    appCompileSdkVersion = 32
+    appMinSdkVersion = 24
+    appTargetSdkVersion = 32
+    appVersionName = "1.0.0"
+    appVersionCode = 1
+    appApplicationId = "com.bsav.instaflix"
+}
