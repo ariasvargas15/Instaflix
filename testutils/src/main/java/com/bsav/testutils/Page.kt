@@ -10,8 +10,4 @@ open class Page {
     inline fun <reified T : Page> on(): T {
         return T::class.constructors.first().call()
     }
-
-    fun wait(seconds: Long) = apply {
-        Thread.sleep(seconds * 1000)
-    }
 }

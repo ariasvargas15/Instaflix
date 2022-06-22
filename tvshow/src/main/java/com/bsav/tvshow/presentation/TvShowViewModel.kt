@@ -31,9 +31,7 @@ class TvShowViewModel @Inject constructor(
                 .flowOn(coroutineContextProvider.io)
                 .catch {
                     if (isThereConnection) {
-                        if (this is Exception) {
-                            _state.value = State.UnexpectedError
-                        }
+                        _state.value = State.UnexpectedError
                     }
                 }
                 .collect {

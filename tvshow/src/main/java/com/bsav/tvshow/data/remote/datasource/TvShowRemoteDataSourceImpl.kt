@@ -11,15 +11,11 @@ class TvShowRemoteDataSourceImpl @Inject constructor(
 ) : TvShowRemoteDataSource {
 
     override fun getTvShowById(id: Int): Flow<TvShow> = flow {
-        try {
-            tvShowService
-                .getTvShowById(id)
-                .mapToDomain()
-                .let {
-                    emit(it)
-                }
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-        }
+        tvShowService
+            .getTvShowById(id)
+            .mapToDomain()
+            .let {
+                emit(it)
+            }
     }
 }
