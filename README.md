@@ -61,7 +61,6 @@ needed fragment and not all the activty, this makes the test easier to mantain, 
  - Migrate to Jetpack Compose
  - Migrate to Kotlin DSL and implement buildSrc module
  - Create a own implementation to load images and not Glide, to improve the way this is being shown
- - Add a Skeleton to the images placeholder
  - Improve the way of handling Errors, with custom Domain Errors and not just Custom exceptions
  - Create integration tests, because the ui tests are being launched in each fragment so, the navigation is not being done, so this should be tested too
 
