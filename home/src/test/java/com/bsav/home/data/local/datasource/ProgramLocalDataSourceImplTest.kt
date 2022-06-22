@@ -21,7 +21,7 @@ import org.junit.Test
 
 class ProgramLocalDataSourceImplTest {
 
-    private val programDao = mockk<ProgramDao>()
+    private val programDao = mockk<com.bsav.db.dao.ProgramDao>()
     private lateinit var programLocalDataSource: ProgramLocalDataSource
 
     @Before
@@ -32,10 +32,10 @@ class ProgramLocalDataSourceImplTest {
     @Test
     fun `when getProgramsByType should call dao`() {
         val type = ProgramType.Movie.Popular.mapToString()
-        val programs = listOf<ProgramEntity>(mockk())
+        val programs = listOf<com.bsav.db.entity.ProgramEntity>(mockk())
         val expected = listOf<Program>(mockk())
         coEvery { programDao.getProgramsByType(type) } answers { programs }
-        mockkStatic(ProgramEntity::mapFromEntityToDomain)
+        mockkStatic(com.bsav.db.entity.ProgramEntity::mapFromEntityToDomain)
         every { programs[0].mapFromEntityToDomain() } answers { expected[0] }
 
         val response = runBlocking {
@@ -49,7 +49,7 @@ class ProgramLocalDataSourceImplTest {
 
     @Test
     fun `when savePrograms should call dao`() {
-        val entities = listOf<ProgramEntity>(mockk())
+        val entities = listOf<com.bsav.db.entity.ProgramEntity>(mockk())
         val programs = listOf<Program>(mockk())
         mockkStatic(Program::mapFromDomainToEntity)
         every { programs[0].mapFromDomainToEntity() } answers { entities[0] }
