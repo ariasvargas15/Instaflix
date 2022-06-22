@@ -8,9 +8,8 @@ dependencies {
     implementation libs.appcompat
     implementation libs.core
     implementation libs.runner
+    implementation libs.bundles.espresso
     implementation libs.hilt.testing.android
     kapt libs.hilt.testing.compiler
 
-    implementation "androidx.test.espresso:espresso-contrib:3.4.0"
-    implementation "androidx.test.espresso:espresso-core:3.4.0"
 }

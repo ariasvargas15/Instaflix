@@ -5,6 +5,7 @@ retrofit = "2.9.0"
 mockk = "1.12.2"
 coroutines = "1.6.2"
 room = "2.4.2"
+espresso = "3.4.0"
 
 [libraries]
 # Plugins
@@ -41,9 +42,11 @@ mockkandroid = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 hilt-testing-android = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt" }
 hilt-testing-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
-
+espresso-contrib = { module = "androidx.test.espresso:espresso-contrib", version.ref = "espresso" }
+espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
 
 [bundles]
 navigation = ["navigation.fragment", "navigation.ui"]
 retrofit = ["retrofit", "gson"]
 room = ["room.runtime", "room.ktx"]
+espresso = ["espresso-contrib", "espresso-core"]

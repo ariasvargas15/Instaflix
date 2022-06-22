@@ -54,8 +54,3 @@ fun isViewDisplayed(id: Int) {
     onView(withId(id))
         .check(matches(isDisplayed()))
 }
-
-fun clickOnListWithPosition(@IdRes recyclerViewId: Int, position: Int) {
-    onView(withId(recyclerViewId))
-        .perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(position, ViewActions.click()))
-}
