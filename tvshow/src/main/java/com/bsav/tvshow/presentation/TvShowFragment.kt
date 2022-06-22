@@ -12,6 +12,8 @@ import com.bsav.core.presentation.snackbar.showErrorMessage
 import com.bsav.core.presentation.snackbar.showInternetNotAvailableMessage
 import com.bsav.tvshow.databinding.FragmentTvShowBinding
 import com.bsav.tvshow.domain.model.TvShow
+import com.ethanhua.skeleton.Skeleton
+import com.ethanhua.skeleton.SkeletonScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,12 +22,28 @@ class TvShowFragment : Fragment() {
     private lateinit var binding: FragmentTvShowBinding
     private val args: TvShowFragmentArgs by navArgs()
     private val viewModel: TvShowViewModel by viewModels()
+    private lateinit var skeleton: SkeletonScreen
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentTvShowBinding.inflate(inflater, container, false)
         setObserver()
         viewModel.getTvShow(args.programId)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        skeleton = binding.constraintBody.showSkeleton()
+    }
+
+    private fun View.showSkeleton(): SkeletonScreen {
+        return Skeleton.bind(this)
+            .shimmer(true)
+            .angle(20)
+            .color(android.R.color.white)
+            .load(com.bsav.core.R.layout.item_body_skeleton)
+            .build()
+            .show()
     }
 
     private fun setObserver() {
@@ -50,6 +68,7 @@ class TvShowFragment : Fragment() {
             "${tvShow.voteAverage}\u2605".also { textScore.text = it }
             "Episodes: ${tvShow.episodes}".also { textEpisodes.text = it }
             "Seasons: ${tvShow.seasons}".also { textSeasons.text = it }
+            skeleton.hide()
         }
     }
 

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.bsav.core.presentation.snackbar.showErrorMessage
 import com.bsav.core.presentation.snackbar.showInternetNotAvailableMessage
 import com.bsav.home.databinding.FragmentHomeBinding
@@ -19,6 +20,8 @@ import com.bsav.home.presentation.HomeViewModel.State.LoadTopRatedMovies
 import com.bsav.home.presentation.HomeViewModel.State.LoadTopRatedTvShows
 import com.bsav.home.presentation.HomeViewModel.State.NoInternetAvailable
 import com.bsav.home.presentation.HomeViewModel.State.UnexpectedError
+import com.ethanhua.skeleton.Skeleton
+import com.ethanhua.skeleton.SkeletonScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,6 +43,26 @@ class HomeFragment : Fragment(), OnClickProgram {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getPrograms()
+        with(binding) {
+            recyclerPopularMovies.showSkeleton()
+            recyclerTopRatedMovies.showSkeleton()
+            recyclerPopularTvShows.showSkeleton()
+            recyclerTopRatedTvShows.showSkeleton()
+        }
+    }
+
+    private fun RecyclerView.showSkeleton(): SkeletonScreen {
+        return Skeleton.bind(this)
+            .adapter(ProgramAdapter(this@HomeFragment))
+            .frozen(false)
+            .count(5)
+            .shimmer(true)
+            .angle(20)
+            .duration(1000)
+            .color(android.R.color.white)
+            .load(com.bsav.core.R.layout.item_program_skeleton)
+            .build()
+            .show()
     }
 
     private fun initializeObservers() {
@@ -71,23 +94,25 @@ class HomeFragment : Fragment(), OnClickProgram {
     }
 
     private fun loadPopularMovies(programs: List<Program>) {
-        val adapter = ProgramAdapter(programs, this)
-        binding.recyclerPopularMovies.adapter = adapter
+        binding.recyclerPopularMovies.setProgramsAdapter(programs)
     }
 
     private fun loadTopRatedMovies(programs: List<Program>) {
-        val adapter = ProgramAdapter(programs, this)
-        binding.recyclerTopRatedMovies.adapter = adapter
+        binding.recyclerTopRatedMovies.setProgramsAdapter(programs)
     }
 
     private fun loadPopularTvShows(programs: List<Program>) {
-        val adapter = ProgramAdapter(programs, this)
-        binding.recyclerPopularTvShows.adapter = adapter
+        binding.recyclerPopularTvShows.setProgramsAdapter(programs)
     }
 
     private fun loadTopRatedTvShows(programs: List<Program>) {
-        val adapter = ProgramAdapter(programs, this)
-        binding.recyclerTopRatedTvShows.adapter = adapter
+        binding.recyclerTopRatedTvShows.setProgramsAdapter(programs)
+    }
+
+    private fun RecyclerView.setProgramsAdapter(programs: List<Program>) {
+        if (programs.isNotEmpty()) {
+            adapter = ProgramAdapter(this@HomeFragment, programs)
+        }
     }
 
     override fun goToDetails(programId: Int, programType: ProgramType) {

@@ -9,8 +9,8 @@ import com.bsav.home.databinding.ItemProgramBinding
 import com.bsav.home.domain.model.Program
 
 class ProgramAdapter(
-    private val programs: List<Program> = emptyList(),
-    private val onClickProgram: OnClickProgram
+    private val onClickProgram: OnClickProgram,
+    private val programs: List<Program> = emptyList()
 ) : RecyclerView.Adapter<ProgramAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: ItemProgramBinding) : RecyclerView.ViewHolder(binding.root) {
