@@ -1,6 +1,6 @@
 package com.bsav.tvshow.data.local
 
-import com.bsav.core.db.entity.TvShowEntity
+import com.bsav.db.entity.TvShowEntity
 import com.bsav.tvshow.domain.model.TvShow
 
 fun TvShowEntity.mapFromEntityToDomain(): TvShow {

@@ -1,6 +1,6 @@
 package com.bsav.movie.data.local
 
-import com.bsav.core.db.entity.MovieEntity
+import com.bsav.db.entity.MovieEntity
 import com.bsav.movie.domain.model.Movie
 
 fun MovieEntity.mapFromEntityToDomain(): Movie {

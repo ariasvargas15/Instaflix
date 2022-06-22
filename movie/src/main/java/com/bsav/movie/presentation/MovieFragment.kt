@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.bsav.core.utils.loadImageFromPathWithBaseUrl
-import com.bsav.core.utils.showErrorMessage
-import com.bsav.core.utils.showInternetNotAvailableMessage
+import com.bsav.core.presentation.glide.loadImageFromPathWithBaseUrl
+import com.bsav.core.presentation.snackbar.showErrorMessage
+import com.bsav.core.presentation.snackbar.showInternetNotAvailableMessage
 import com.bsav.movie.databinding.FragmentMovieBinding
 import com.bsav.movie.domain.model.Movie
 import com.bsav.movie.presentation.MovieViewModel.State.LoadMovie

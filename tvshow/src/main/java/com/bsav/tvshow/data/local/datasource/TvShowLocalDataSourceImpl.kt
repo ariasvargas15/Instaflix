@@ -1,6 +1,6 @@
 package com.bsav.tvshow.data.local.datasource
 
-import com.bsav.core.db.dao.TvShowDao
+import com.bsav.db.dao.TvShowDao
 import com.bsav.tvshow.data.local.mapFromDomainToEntity
 import com.bsav.tvshow.data.local.mapFromEntityToDomain
 import com.bsav.tvshow.domain.model.TvShow

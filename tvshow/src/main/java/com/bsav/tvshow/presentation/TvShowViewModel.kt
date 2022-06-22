@@ -1,16 +1,14 @@
 package com.bsav.tvshow.presentation
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bsav.core.utils.CoroutineContextProvider
-import com.bsav.core.utils.NetworkHelper
+import com.bsav.core.coroutinecontext.CoroutineContextProvider
+import com.bsav.networkhelper.NetworkHelper
 import com.bsav.tvshow.domain.model.TvShow
 import com.bsav.tvshow.domain.usecase.GetTvShowById
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
@@ -35,7 +33,6 @@ class TvShowViewModel @Inject constructor(
                     if (isThereConnection) {
                         if (this is Exception) {
                             _state.value = State.UnexpectedError
-                            Log.e("getTvShow", message.toString())
                         }
                     }
                 }
@@ -43,9 +40,6 @@ class TvShowViewModel @Inject constructor(
                     _state.value = State.LoadTvShow(it)
                 }
         }
-    }
-
-    private fun emitErrorState(flowCollector: FlowCollector<TvShow>) {
     }
 
     private fun checkInternetConnection(): Boolean {

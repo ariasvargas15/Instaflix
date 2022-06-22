@@ -1,31 +1,8 @@
-plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
-    id 'kotlin-android'
-    id 'dagger.hilt.android.plugin'
-}
+apply from: "$rootDir/shared.gradle"
+
 android {
-    compileSdk 32
-
     defaultConfig {
-        minSdk 24
-        targetSdk 32
         buildConfigField "String", "INSTAFLIX_API_KEY", '"9120de504358f67a197b24e5d077b947"'
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
     }
 }
 
@@ -36,17 +13,9 @@ dependencies {
     // Retrofit
     api libs.bundles.retrofit
 
-    // Hilt
-    implementation libs.hilt.android
-    kapt libs.hilt.compiler
-
     // Coroutines
     implementation libs.coroutines.core
 
     // Material
     implementation libs.material
-
-    // Room
-    implementation libs.bundles.room
-    kapt libs.room.compiler
 }

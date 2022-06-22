@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bsav.core.utils.loadImageFromPathWithBaseUrl
+import com.bsav.core.presentation.glide.loadImageFromPathWithBaseUrl
 import com.bsav.home.databinding.ItemProgramBinding
 import com.bsav.home.domain.model.Program
 

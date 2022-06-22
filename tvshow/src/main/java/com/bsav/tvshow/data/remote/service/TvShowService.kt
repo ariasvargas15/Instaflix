@@ -1,6 +1,6 @@
 package com.bsav.tvshow.data.remote.service
 
-import com.bsav.core.utils.API_KEY
+import com.bsav.core.constants.API_KEY
 import com.bsav.tvshow.data.remote.model.TvShowNetwork
 import retrofit2.http.GET
 import retrofit2.http.Path

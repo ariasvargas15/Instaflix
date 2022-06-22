@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bsav.core.utils.CoroutineContextProvider
-import com.bsav.core.utils.NetworkHelper
+import com.bsav.core.coroutinecontext.CoroutineContextProvider
 import com.bsav.movie.domain.model.Movie
 import com.bsav.movie.domain.usecase.GetMovieById
+import com.bsav.networkhelper.NetworkHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn

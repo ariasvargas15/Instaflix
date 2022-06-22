@@ -3,13 +3,13 @@ package com.bsav.home.presentation
 import android.accounts.NetworkErrorException
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.bsav.core.utils.Event
-import com.bsav.core.utils.NetworkHelper
+import com.bsav.core.eventwrapper.Event
 import com.bsav.home.domain.model.Destination
 import com.bsav.home.domain.model.Program
 import com.bsav.home.domain.model.ProgramType
 import com.bsav.home.domain.usecase.GetProgramsByType
 import com.bsav.home.domain.usecase.navigator.ProgramNavigator
+import com.bsav.networkhelper.NetworkHelper
 import com.bsav.testutils.TestCoroutineRule
 import io.mockk.every
 import io.mockk.mockk

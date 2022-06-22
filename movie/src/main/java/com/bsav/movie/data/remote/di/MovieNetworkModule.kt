@@ -16,9 +16,14 @@ object MovieNetworkModule {
 
     @Provides
     @Reusable
-    fun provideMovieService(retrofit: Retrofit): MovieService = retrofit.create(MovieService::class.java)
+    fun provideMovieRemoteDataSource(movieRemoteDataSourceImpl: MovieRemoteDataSourceImpl): MovieRemoteDataSource = movieRemoteDataSourceImpl
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+object MovieServiceModule {
 
     @Provides
     @Reusable
-    fun provideMovieRemoteDataSource(movieRemoteDataSourceImpl: MovieRemoteDataSourceImpl): MovieRemoteDataSource = movieRemoteDataSourceImpl
+    fun provideMovieService(retrofit: Retrofit): MovieService = retrofit.create(MovieService::class.java)
 }

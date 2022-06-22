@@ -1,6 +1,6 @@
 package com.bsav.movie.data.local.datasource
 
-import com.bsav.core.db.dao.MovieDao
+import com.bsav.db.dao.MovieDao
 import com.bsav.movie.data.local.mapFromDomainToEntity
 import com.bsav.movie.data.local.mapFromEntityToDomain
 import com.bsav.movie.domain.model.Movie

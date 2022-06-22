@@ -1,6 +1,6 @@
 package com.bsav.home.data.local
 
-import com.bsav.core.db.entity.ProgramEntity
+import com.bsav.db.entity.ProgramEntity
 import com.bsav.home.domain.model.Program
 import com.bsav.home.domain.model.ProgramType
 

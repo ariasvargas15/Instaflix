@@ -1,34 +1,9 @@
-plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
-    id 'androidx.navigation.safeargs.kotlin'
-}
+apply from: "$rootDir/shared.gradle"
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
-    compileSdk 32
-
     defaultConfig {
-        minSdk 24
-        targetSdk 32
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
+        testInstrumentationRunner "com.bsav.testutils.CustomTestRunner"
     }
     viewBinding {
         enabled = true
@@ -37,13 +12,11 @@ android {
 
 dependencies {
     implementation project(":core")
+    implementation project(":db")
+    implementation project(":networkhelper")
+
     testImplementation project(":testutils")
-
-    implementation libs.kotlin.reflect
-
-    // Hilt
-    implementation libs.hilt.android
-    kapt libs.hilt.compiler
+    androidTestImplementation project(":testutils")
 
     // Navigation
     implementation libs.bundles.navigation
@@ -56,4 +29,8 @@ dependencies {
     testImplementation libs.junit
     testImplementation libs.coretesting
     testImplementation libs.coroutines.test
+
+    kaptAndroidTest libs.hilt.testing.compiler
+    androidTestImplementation libs.hilt.testing.android
+    androidTestImplementation libs.mockkandroid
 }
